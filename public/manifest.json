@@ -1,0 +1,24 @@
+{
+  "name": "Need Edge checker",
+  "version": "0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16-gray.png",
+      "48": "icons/48-gray.png",
+      "128": "icons/128-gray.png"
+    }
+  },
+  "description": "Check redirection settings of IE11 to Edge.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["https://edge.microsoft.com/"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
