@@ -89,6 +89,7 @@ describe("checkNeedEdge", () => {
     ["http://hondacars.jp/", false],
     ["http://hondacars.jp/tokyo/", false],
     ["http://hondacars.jp/fukuoka/", true],
+    ["http://www.hondacars.jp/fukuoka/", true],
 
     ["https://www.youtube.com/", true],
     ["https://music.youtube.com/", true],
