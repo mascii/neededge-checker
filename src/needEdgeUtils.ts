@@ -14,7 +14,7 @@ export function getNeedEdgeSiteListVersion(needEdgeXmlData: string): string {
 }
 
 export function generateNeedEdgeTree(needEdgeXmlData: string): NeedEdgeMap {
-  const tree = new Map() as NeedEdgeMap;
+  const tree: NeedEdgeMap = new Map();
 
   const sites = needEdgeXmlData.matchAll(/<site url="([^"/]+)([^"]*)">/g);
   for (const [, hostname, pathname] of sites) {
@@ -23,7 +23,7 @@ export function generateNeedEdgeTree(needEdgeXmlData: string): NeedEdgeMap {
     const domainsReversed = hostname.split(".").reverse();
     for (const domain of domainsReversed) {
       if (!subTree.has(domain)) {
-        subTree.set(domain, new Map() as NeedEdgeMap);
+        subTree.set(domain, new Map());
       }
       subTree = subTree.get(domain)!;
     }
