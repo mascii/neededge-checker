@@ -22,6 +22,12 @@ async function initializeExtension() {
   } catch (e) {
     console.error(e);
   }
+
+  const tab = await getActiveTab();
+
+  if (typeof tab?.url === "string" && typeof tab?.id === "number") {
+    setIcon(checkNeedEdge(needEdgeTree, tab.url), tab.id);
+  }
 }
 
 async function initializeNeedEdgeData(
