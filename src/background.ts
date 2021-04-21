@@ -14,31 +14,37 @@ import type { NeedEdgeMap } from "./NeedEdgeMap";
 let siteListVersion = "not loaded";
 let needEdgeTree: NeedEdgeMap | undefined;
 
-initializeNeedEdgeData();
+initializeExtension();
 
-async function initializeNeedEdgeData(forceUpdate = false) {
+async function initializeExtension() {
+  try {
+    [siteListVersion, needEdgeTree] = await initializeNeedEdgeData();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function initializeNeedEdgeData(
+  forceUpdate = false
+): Promise<[string, NeedEdgeMap]> {
   if (!forceUpdate) {
     const {
       [NEED_EDGE_DATA_STORAGE_KEY]: data,
     } = await browser.storage.local.get(NEED_EDGE_DATA_STORAGE_KEY);
 
     if (typeof data === "string") {
-      siteListVersion = getNeedEdgeSiteListVersion(data);
-      needEdgeTree = generateNeedEdgeTree(data);
-      return;
+      return [getNeedEdgeSiteListVersion(data), generateNeedEdgeTree(data)];
     }
   }
 
   try {
     const data = await fetchNeedEdgeXmlData();
-
-    siteListVersion = getNeedEdgeSiteListVersion(data);
-    needEdgeTree = generateNeedEdgeTree(data);
-
     browser.storage.local.set({ [NEED_EDGE_DATA_STORAGE_KEY]: data });
     setBadgeText("");
-  } catch {
+    return [getNeedEdgeSiteListVersion(data), generateNeedEdgeTree(data)];
+  } catch (e) {
     setBadgeText("!");
+    throw e;
   }
 }
 
@@ -71,7 +77,7 @@ browser.runtime.onMessage.addListener(async (message: string) => {
   }
 
   if (message === "FORCE_UPDATE_NEED_EDGE_DATA") {
-    await initializeNeedEdgeData(true);
+    [siteListVersion, needEdgeTree] = await initializeNeedEdgeData(true);
 
     if (typeof tab?.url === "string" && typeof tab?.id === "number") {
       setIcon(checkNeedEdge(needEdgeTree, tab.url), tab.id);
