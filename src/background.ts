@@ -18,7 +18,7 @@ const initializationPromise = initializeExtension();
 
 async function initializeExtension() {
   try {
-    [siteListVersion, needEdgeTree] = await initializeNeedEdgeData();
+    [siteListVersion, needEdgeTree] = await getSiteListVersionAndNeedEdgeTree();
   } catch (e) {
     console.error(e);
   }
@@ -30,7 +30,7 @@ async function initializeExtension() {
   }
 }
 
-async function initializeNeedEdgeData(
+async function getSiteListVersionAndNeedEdgeTree(
   forceUpdate = false
 ): Promise<[string, NeedEdgeMap]> {
   if (!forceUpdate) {
@@ -85,7 +85,9 @@ browser.runtime.onMessage.addListener(async (message: string) => {
   }
 
   if (message === "FORCE_UPDATE_NEED_EDGE_DATA") {
-    [siteListVersion, needEdgeTree] = await initializeNeedEdgeData(true);
+    [siteListVersion, needEdgeTree] = await getSiteListVersionAndNeedEdgeTree(
+      true
+    );
 
     if (typeof tab?.url === "string" && typeof tab?.id === "number") {
       setIcon(checkNeedEdge(needEdgeTree, tab.url), tab.id);
