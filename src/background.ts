@@ -14,7 +14,7 @@ import type { NeedEdgeMap } from "./NeedEdgeMap";
 let siteListVersion = "not loaded";
 let needEdgeTree: NeedEdgeMap | undefined;
 
-initializeExtension();
+const initializationPromise = initializeExtension();
 
 async function initializeExtension() {
   try {
@@ -72,6 +72,8 @@ browser.runtime.onMessage.addListener(async (message: string) => {
   const tab = await getActiveTab();
 
   if (message === "INITIALIZE_POPUP") {
+    await initializationPromise;
+
     let isNeedEdge = false;
 
     if (typeof tab?.url === "string" && typeof tab?.id === "number") {
