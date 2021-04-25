@@ -1,4 +1,4 @@
-import { browser } from "webextension-polyfill-ts";
+import { browser, Tabs } from "webextension-polyfill-ts";
 
 import {
   fetchNeedEdgeXmlData,
@@ -23,9 +23,7 @@ async function initializeExtension() {
 
   const tab = await getActiveTab();
 
-  if (typeof tab?.url === "string" && typeof tab?.id === "number") {
-    setIcon(checkNeedEdge(needEdgeTree, tab.url), tab.id);
-  }
+  updateExtensionIconStatusByTab(tab);
 }
 
 async function getSiteListVersionAndNeedEdgeTree(
@@ -53,17 +51,29 @@ async function getSiteListVersionAndNeedEdgeTree(
   }
 }
 
-browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (typeof tab.url === "string") {
-    setIcon(checkNeedEdge(needEdgeTree, tab.url), tabId);
+function updateExtensionIconStatusByTab(tab: Tabs.Tab | undefined): boolean {
+  if (typeof tab?.id === "number") {
+    if (needEdgeTree && typeof tab?.url === "string") {
+      const isNeedEdge = checkNeedEdge(needEdgeTree, tab.url);
+      setIcon(isNeedEdge, tab.id);
+      return isNeedEdge;
+    } else {
+      setIcon(false, tab.id);
+      return false;
+    }
   }
+  return false;
+}
+
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  updateExtensionIconStatusByTab(tab);
 });
 
 browser.tabs.onActivated.addListener(async (activeInfo) => {
   const tab = await getActiveTab();
 
-  if (tab?.id === activeInfo.tabId && typeof tab.url === "string") {
-    setIcon(checkNeedEdge(needEdgeTree, tab.url), activeInfo.tabId);
+  if (tab?.id === activeInfo.tabId) {
+    updateExtensionIconStatusByTab(tab);
   }
 });
 
@@ -73,12 +83,7 @@ browser.runtime.onMessage.addListener(async (message: string) => {
   if (message === "INITIALIZE_POPUP") {
     await initializationPromise;
 
-    let isNeedEdge = false;
-
-    if (typeof tab?.url === "string" && typeof tab?.id === "number") {
-      isNeedEdge = checkNeedEdge(needEdgeTree, tab.url);
-      setIcon(isNeedEdge, tab.id);
-    }
+    const isNeedEdge = updateExtensionIconStatusByTab(tab);
 
     return [siteListVersion, isNeedEdge];
   }
@@ -88,9 +93,7 @@ browser.runtime.onMessage.addListener(async (message: string) => {
       true
     );
 
-    if (typeof tab?.url === "string" && typeof tab?.id === "number") {
-      setIcon(checkNeedEdge(needEdgeTree, tab.url), tab.id);
-    }
+    updateExtensionIconStatusByTab(tab);
 
     return siteListVersion;
   }
