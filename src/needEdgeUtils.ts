@@ -1,5 +1,5 @@
 import { NEED_EDGE_XML_URL, NEED_EDGE_PATHS_KEY } from "./constants";
-import type { NeedEdgeMap } from "./NeedEdgeMap";
+import type { NeedEdgeMap } from "./types/NeedEdgeMap";
 
 export async function fetchNeedEdgeXmlData(): Promise<string> {
   const response = await fetch(NEED_EDGE_XML_URL);

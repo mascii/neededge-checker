@@ -1,4 +1,4 @@
-import type { NEED_EDGE_PATHS_KEY } from "./constants";
+import type { NEED_EDGE_PATHS_KEY } from "../constants";
 
 export interface NeedEdgeMap extends Map<string, NeedEdgeMap | string[]> {
   get(key: NEED_EDGE_PATHS_KEY): string[] | undefined;

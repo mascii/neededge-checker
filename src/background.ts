@@ -11,7 +11,7 @@ import {
   NOT_LOADED_SITE_LIST_VERSION,
   NEED_EDGE_DATA_STORAGE_KEY,
 } from "./constants";
-import type { NeedEdgeMap } from "./NeedEdgeMap";
+import type { NeedEdgeMap } from "./types/NeedEdgeMap";
 
 let siteListVersion = NOT_LOADED_SITE_LIST_VERSION;
 let needEdgeTree: NeedEdgeMap | undefined;
