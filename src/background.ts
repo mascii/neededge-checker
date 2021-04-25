@@ -6,7 +6,7 @@ import {
   generateNeedEdgeTree,
   checkNeedEdge,
 } from "./needEdgeUtils";
-import { getActiveTab, setIcon, setBadgeText } from "./extensionsUtils";
+import { getActiveTab, setIconStatus, setBadgeText } from "./extensionsUtils";
 import {
   NEED_EDGE_NOT_LOADED_SITE_LIST_VERSION,
   NEED_EDGE_DATA_STORAGE_KEY,
@@ -55,10 +55,10 @@ function updateExtensionIconStatusByTab(tab: Tabs.Tab | undefined): boolean {
   if (typeof tab?.id === "number") {
     if (needEdgeTree && typeof tab?.url === "string") {
       const isNeedEdge = checkNeedEdge(needEdgeTree, tab.url);
-      setIcon(isNeedEdge, tab.id);
+      setIconStatus(isNeedEdge, tab.id);
       return isNeedEdge;
     } else {
-      setIcon(false, tab.id);
+      setIconStatus(false, tab.id);
       return false;
     }
   }

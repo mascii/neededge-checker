@@ -5,8 +5,8 @@ export async function getActiveTab(): Promise<Tabs.Tab | undefined> {
   return tab;
 }
 
-export function setIcon(flag: boolean, tabId: number) {
-  const path = flag
+export function setIconStatus(enabled: boolean, tabId: number) {
+  const path = enabled
     ? {
         "16": "icons/16.png",
         "48": "icons/48.png",
