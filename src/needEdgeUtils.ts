@@ -39,14 +39,7 @@ export function generateNeedEdgeTree(needEdgeXmlData: string): NeedEdgeMap {
   return tree;
 }
 
-export function checkNeedEdge(
-  needEdgeTree: NeedEdgeMap | undefined,
-  url: string | undefined
-): boolean {
-  if (needEdgeTree == null || url == null) {
-    return false;
-  }
-
+export function checkNeedEdge(needEdgeTree: NeedEdgeMap, url: string): boolean {
   try {
     const { protocol, hostname, pathname } = new URL(url);
 
