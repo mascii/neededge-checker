@@ -1,3 +1,10 @@
+import { browser, Tabs } from "webextension-polyfill-ts";
+
+export async function getActiveTab(): Promise<Tabs.Tab | undefined> {
+  const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+  return tab;
+}
+
 export function setIcon(flag: boolean, tabId: number) {
   const path = flag
     ? {
