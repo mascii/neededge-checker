@@ -3,7 +3,7 @@ import {
   generateNeedEdgeTree,
   checkNeedEdge,
 } from "./needEdgeUtils";
-import { NEED_EDGE_PATHS_KEY } from "./constants";
+import { NEED_EDGE_MAP_PATHS_KEY } from "./constants";
 
 // subset of v31
 const NEED_EDGE_XML_DATA = `<?xml version="1.0" encoding="utf-8" ?>
@@ -52,18 +52,18 @@ describe("generateNeedEdgeTree", () => {
     const tree = generateNeedEdgeTree(NEED_EDGE_XML_DATA);
     expect(tree.has("jp")).toBe(true);
     expect(tree.has("com")).toBe(true);
-    expect(tree.has(NEED_EDGE_PATHS_KEY)).toBe(false);
+    expect(tree.has(NEED_EDGE_MAP_PATHS_KEY)).toBe(false);
 
     const jpTree = tree.get("jp")!;
     expect(jpTree.has("crowdworks")).toBe(true);
     expect(jpTree.has("hondacars")).toBe(true);
-    expect(jpTree.has(NEED_EDGE_PATHS_KEY)).toBe(false);
+    expect(jpTree.has(NEED_EDGE_MAP_PATHS_KEY)).toBe(false);
 
     const cwTree = jpTree.get("crowdworks")!;
-    expect(cwTree.get(NEED_EDGE_PATHS_KEY)).toEqual([""]);
+    expect(cwTree.get(NEED_EDGE_MAP_PATHS_KEY)).toEqual([""]);
 
     const hondaTree = jpTree.get("hondacars")!;
-    expect(hondaTree.get(NEED_EDGE_PATHS_KEY)).toEqual([
+    expect(hondaTree.get(NEED_EDGE_MAP_PATHS_KEY)).toEqual([
       "/fukuoka/",
       "/kagoshima/",
       "/kumamoto/",

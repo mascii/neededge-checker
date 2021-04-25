@@ -1,5 +1,6 @@
-export const NEED_EDGE_PATHS_KEY = "$$PATHS";
-export type NEED_EDGE_PATHS_KEY = typeof NEED_EDGE_PATHS_KEY;
+import type { NeedEdgeMapPathsKey } from "./types/NeedEdgeMap";
+
+export const NEED_EDGE_MAP_PATHS_KEY: NeedEdgeMapPathsKey = "$$PATHS";
 
 export const NOT_LOADED_SITE_LIST_VERSION = "not loaded";
 

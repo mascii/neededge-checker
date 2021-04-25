@@ -1,4 +1,4 @@
-import { NEED_EDGE_XML_URL, NEED_EDGE_PATHS_KEY } from "./constants";
+import { NEED_EDGE_XML_URL, NEED_EDGE_MAP_PATHS_KEY } from "./constants";
 import type { NeedEdgeMap } from "./types/NeedEdgeMap";
 
 export async function fetchNeedEdgeXmlData(): Promise<string> {
@@ -28,10 +28,10 @@ export function generateNeedEdgeTree(needEdgeXmlData: string): NeedEdgeMap {
       subTree = subTree.get(domain)!;
     }
 
-    if (!subTree.has(NEED_EDGE_PATHS_KEY)) {
-      subTree.set(NEED_EDGE_PATHS_KEY, []);
+    if (!subTree.has(NEED_EDGE_MAP_PATHS_KEY)) {
+      subTree.set(NEED_EDGE_MAP_PATHS_KEY, []);
     }
-    subTree.get(NEED_EDGE_PATHS_KEY)!.push(pathname);
+    subTree.get(NEED_EDGE_MAP_PATHS_KEY)!.push(pathname);
   }
 
   return tree;
@@ -62,7 +62,7 @@ export function checkNeedEdge(
         return false;
       }
 
-      for (const path of subTree.get(NEED_EDGE_PATHS_KEY) || []) {
+      for (const path of subTree.get(NEED_EDGE_MAP_PATHS_KEY) || []) {
         if (pathname.startsWith(path)) {
           return true;
         }
