@@ -1,5 +1,5 @@
 import {
-  getNeedEdgeSiteListVersion,
+  extractNeedEdgeSiteListVersion,
   generateNeedEdgeTree,
   checkNeedEdge,
 } from "./needEdgeUtils";
@@ -41,9 +41,9 @@ const NEED_EDGE_XML_DATA = `<?xml version="1.0" encoding="utf-8" ?>
 </site-list>
 `;
 
-describe("getNeedEdgeSiteListVersion", () => {
+describe("extractNeedEdgeSiteListVersion", () => {
   it("check it can get version", () => {
-    expect(getNeedEdgeSiteListVersion(NEED_EDGE_XML_DATA)).toBe("31");
+    expect(extractNeedEdgeSiteListVersion(NEED_EDGE_XML_DATA)).toBe("31");
   });
 });
 

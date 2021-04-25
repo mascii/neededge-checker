@@ -2,7 +2,7 @@ import { browser } from "webextension-polyfill-ts";
 
 import {
   fetchNeedEdgeXmlData,
-  getNeedEdgeSiteListVersion,
+  extractNeedEdgeSiteListVersion,
   generateNeedEdgeTree,
   checkNeedEdge,
 } from "./needEdgeUtils";
@@ -37,7 +37,7 @@ async function getSiteListVersionAndNeedEdgeTree(
     } = await browser.storage.local.get(NEED_EDGE_DATA_STORAGE_KEY);
 
     if (typeof data === "string") {
-      return [getNeedEdgeSiteListVersion(data), generateNeedEdgeTree(data)];
+      return [extractNeedEdgeSiteListVersion(data), generateNeedEdgeTree(data)];
     }
   }
 
@@ -45,7 +45,7 @@ async function getSiteListVersionAndNeedEdgeTree(
     const data = await fetchNeedEdgeXmlData();
     browser.storage.local.set({ [NEED_EDGE_DATA_STORAGE_KEY]: data });
     setBadgeText("");
-    return [getNeedEdgeSiteListVersion(data), generateNeedEdgeTree(data)];
+    return [extractNeedEdgeSiteListVersion(data), generateNeedEdgeTree(data)];
   } catch (e) {
     console.error(e);
     setBadgeText("!");

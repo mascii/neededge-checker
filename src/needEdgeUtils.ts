@@ -7,7 +7,9 @@ export async function fetchNeedEdgeXmlData(): Promise<string> {
   return text;
 }
 
-export function getNeedEdgeSiteListVersion(needEdgeXmlData: string): string {
+export function extractNeedEdgeSiteListVersion(
+  needEdgeXmlData: string
+): string {
   return (
     needEdgeXmlData.match(/<site-list version="([0-9]+)">/)?.[1] ?? "unknown"
   );
