@@ -8,12 +8,12 @@ import {
 } from "./needEdgeUtils";
 import { getActiveTab, setIcon, setBadgeText } from "./extensionsUtils";
 import {
-  NOT_LOADED_SITE_LIST_VERSION,
+  NEED_EDGE_NOT_LOADED_SITE_LIST_VERSION,
   NEED_EDGE_DATA_STORAGE_KEY,
 } from "./constants";
 import type { NeedEdgeMap } from "./types/NeedEdgeMap";
 
-let siteListVersion = NOT_LOADED_SITE_LIST_VERSION;
+let siteListVersion = NEED_EDGE_NOT_LOADED_SITE_LIST_VERSION;
 let needEdgeTree: NeedEdgeMap | undefined;
 
 const initializationPromise = initializeExtension();
@@ -49,7 +49,7 @@ async function getSiteListVersionAndNeedEdgeTree(
   } catch (e) {
     console.error(e);
     setBadgeText("!");
-    return [NOT_LOADED_SITE_LIST_VERSION, generateNeedEdgeTree("")];
+    return [NEED_EDGE_NOT_LOADED_SITE_LIST_VERSION, generateNeedEdgeTree("")];
   }
 }
 
