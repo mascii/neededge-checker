@@ -62,11 +62,9 @@ export function checkNeedEdge(
         return false;
       }
 
-      if (subTree.has(NEED_EDGE_PATHS_KEY)) {
-        for (const path of subTree.get(NEED_EDGE_PATHS_KEY)!) {
-          if (pathname.startsWith(path)) {
-            return true;
-          }
+      for (const path of subTree.get(NEED_EDGE_PATHS_KEY) || []) {
+        if (pathname.startsWith(path)) {
+          return true;
         }
       }
     }
