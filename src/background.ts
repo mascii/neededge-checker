@@ -66,7 +66,9 @@ function updateExtensionIconStatusByTab(tab: Tabs.Tab | undefined): boolean {
 }
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  updateExtensionIconStatusByTab(tab);
+  if (changeInfo.status === "loading") {
+    updateExtensionIconStatusByTab(tab);
+  }
 });
 
 browser.tabs.onActivated.addListener(async (activeInfo) => {
