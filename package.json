@@ -1,6 +1,6 @@
 {
     "name": "neededge-checker",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Check redirection settings of IE11 to Edge.",
     "scripts": {
         "build": "webpack",
